@@ -1,0 +1,45 @@
+@media only screen and (max-width: 600px) {
+    .m-mb-0
+    {
+        margin-top:0px !important;
+        margin-bottom:0px !important;
+        margin-left:0px !important;
+        margin-right:0px !important;
+    }
+    body
+    {
+        max-width: 100wd;
+        overflow-x: hidden;
+        font-size: 14px;
+    }
+    .owl-nav img, #pattern-about-1, #pattern-about-2, #pattern-about-3, #course-content-pattern
+    {
+    display: none;
+    }
+    .homepage section.about
+    {
+        padding: 20px;
+    }
+    section h3
+    {
+        font-size: 18px;
+    }
+    section.about h3
+    {
+        text-align: left;
+    }
+    #pattern-about-4
+    {
+        background: none;
+        bottom: calc(50% - 22.5px);
+        right: calc(50% - 22.5px);
+        padding: 0px;
+    }
+    section.about .info h3
+    {
+            font-size: 19px;
+    line-height: 28px;
+    text-align: left;
+    margin-top: 10px;
+    }
+}

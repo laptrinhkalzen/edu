@@ -1,0 +1,73 @@
+/* START test */
+#test .underlay
+{
+    width: 25%;
+    display: block;
+    height: 100vh;
+    position: fixed;
+    background: #605b5b;
+}
+#content
+{
+    background: #e4980f;
+    position: relative;
+    padding-right: 0px;
+}
+.logo-holder
+{
+    background: #ef5a2f;
+    padding: 10px;
+}
+.content-test
+{
+    padding-left: 100px;
+    background-clip: content-box;
+    background-color: #f7f7f7;
+    padding-right: 0px;
+}
+.question-list
+{
+    padding: 20px;
+}
+.question-list h5
+{
+    font-weight: bold;
+    font-size: 20px;
+}
+.question-list .card
+{
+    border: none;
+}
+.question-list input
+{
+    border: none;
+    border-bottom: 1px solid;
+}
+.question-list .form-check-input[type=radio]
+{
+        border-radius: 50%;
+    background: var(--main-color);
+    border-bottom: none;
+}
+.question-list .form-check-input[type=radio]:checked
+{
+    background: #fff;
+    border: 4px solid var(--main-color);
+}
+.part-name
+{
+    float: left;
+}
+.part-name a
+{
+    padding: 10px;
+    margin-bottom: 20px;
+    display: block;
+    background: #fff;
+    float: left;
+    border: 1px solid #e5e5e5;
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--main-color);
+}
+/* END test */

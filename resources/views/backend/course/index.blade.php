@@ -5,7 +5,11 @@
     <!-- Table header styling -->
     <div class="card">
         <div class="card-header header-elements-inline">
-            <h5 class="card-title">Khoá học </h5>
+            @if($type==1)
+            <h5 class="card-title">Khoá học offline</h5>
+            @else
+            <h5 class="card-title">Khoá học online</h5>
+            @endif
             <div class="header-elements">
                 <div class="list-icons">
                     <a class="list-icons-item" data-action="collapse"></a>
@@ -113,7 +117,7 @@
                 </div>
                 </form>
                     <td class="">
-                        <a href="{{route('admin.course.edit', $record->id)}}" title="{!! trans('base.edit') !!}" class="success"><i class="icon-pencil"></i></a>
+                        <a href="{{route('admin.course.edit',['type'=>$record->type,'id'=>$record->id])}}" title="{!! trans('base.edit') !!}" class="success"><i class="icon-pencil"></i></a>
                         
                     </td>
                 </tr>

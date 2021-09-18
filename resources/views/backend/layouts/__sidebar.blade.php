@@ -109,8 +109,8 @@
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link  {{ ((Route::currentRouteName() == 'admin.course.index')) ? 'active' : '' }}"><i class="icon-check"></i> <span>Khoá học</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="bài test">
-                        <li class="nav-item"><a href="{{route('admin.course.index')}}" class="nav-link">Danh sách khoá học</a></li>
-                        
+                        <li class="nav-item"><a href="{{route('admin.course.index', \App\Course::TYPE_OFF)}}" class="nav-link">Danh sách khoá học offline</a></li>
+                        <li class="nav-item"><a href="{{route('admin.course.index', \App\Course::TYPE_ON)}}" class="nav-link">Danh sách khoá học online</a></li>
                     </ul>
 
                 </li>

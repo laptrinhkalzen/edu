@@ -5,35 +5,43 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ContactAddress;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Repositories\ContactAddressRepository;
 
-class ContactAddressController extends Controller {
+class ContactAddressController extends Controller
+{
 
+    public function __construct(ContactAddressRepository $contactaddressRepo)
+    {
+        $this->contactaddressRepo = $contactaddressRepo;
+    }
 
-
-    public function index(Request $request) {
-        $records = DB::table('contact_address')->orderBy('ordering','desc')->get();
+    public function index(Request $request)
+    {
+        $records = DB::table('contact_address')->orderBy('ordering', 'desc')->get();
         return view('backend/contact_address/index', compact('records'));
     }
 
 
-    public function create() {
-        $count_ordering =DB::table('contact_address')->count();
+    public function create()
+    {
+        $count_ordering = DB::table('contact_address')->count();
         return view('backend/contact_address/create', compact('count_ordering'));
     }
 
-    public function store(Request $request) {
-        $ct = new ContactAddress();
+    public function store(Request $request)
+    {
+
         $input = $request->all();
-  
-        $validator = \Validator::make($input, $ct->validateCreate());
+
+        $validator = \Validator::make($input, $this->contactaddressRepo->validateCreate());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-         $input['status'] = isset($input['status']) ? 1 : 0;
-        $input['created_at'] = Carbon::now('Asia/Ho_Chi_Minh'); 
-        $res = $ct->create($input);   
+        $input['status'] = isset($input['status']) ? 1 : 0;
+        $input['created_at'] = Carbon::now('Asia/Ho_Chi_Minh');
+        $res = $this->contactaddressRepo->create($input);
         if ($res) {
             return redirect()->route('admin.contact_address.index')->with('success', 'Tạo mới thành công');
         } else {
@@ -47,7 +55,8 @@ class ContactAddressController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -57,12 +66,13 @@ class ContactAddressController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
-        $record = ContactAddress::find($id);
-        if($record){
+    public function edit($id)
+    {
+        $record = $this->contactaddressRepo->find($id);
+        if ($record) {
 
-        return view('backend/contact_address/edit', compact('record'));
-        }else{
+            return view('backend/contact_address/edit', compact('record'));
+        } else {
             abort(404);
         }
     }
@@ -74,17 +84,18 @@ class ContactAddressController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
-        $ct = new ContactAddress();
+    public function update(Request $request, $id)
+    {
+
         $input = $request->all();
-  
-        $validator = \Validator::make($input, $ct->validateUpdate($id));
+
+        $validator = \Validator::make($input, $this->contactaddressRepo->validateUpdate($id));
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-         $input['status'] = isset($input['status']) ? 1 : 0;
-        $input['updated_at'] = Carbon::now('Asia/Ho_Chi_Minh'); 
-        $res = $ct->find($id)->update($input);   
+        $input['status'] = isset($input['status']) ? 1 : 0;
+        $input['updated_at'] = Carbon::now('Asia/Ho_Chi_Minh');
+        $res = $this->contactaddressRepo->find($id)->update($input);
         if ($res) {
             return redirect()->route('admin.contact_address.index')->with('success', 'Cập nhật thành công');
         } else {
@@ -92,40 +103,39 @@ class ContactAddressController extends Controller {
         }
     }
 
-      public function update_multiple(Request $request) {
+    public function update_multiple(Request $request)
+    {
         $data = $request->all();
-        
-        if($request->action == "save"){      
-           $records = DB::table('contact_address')->orderBy('ordering','desc')->get();
-           foreach ($records as $key => $record) {
-               if($record->ordering != $data['orderBy'][$key]){
-                    DB::table('contact_address')->where('id',$record->id)->update(['ordering'=>$data['orderBy'][$key]]);
-               }
-           }
-           return redirect()->back()->with('success',"Cập nhật thành công");
-        }
-        else{
-            if($request->check == null){
-            return redirect()->back()->with('error',"Vui lòng chọn ít nhất một địa chỉ liên hệ");
+
+        if ($request->action == "save") {
+            $records = DB::table('contact_address')->orderBy('ordering', 'desc')->get();
+            foreach ($records as $key => $record) {
+                if ($record->ordering != $data['orderBy'][$key]) {
+                    DB::table('contact_address')->where('id', $record->id)->update(['ordering' => $data['orderBy'][$key]]);
+                }
+            }
+            return redirect()->back()->with('success', "Cập nhật thành công");
+        } else {
+            if ($request->check == null) {
+                return redirect()->back()->with('error', "Vui lòng chọn ít nhất một địa chỉ liên hệ");
             }
 
-            if($request->action == "delete"){
-               foreach($data['check'] as $key => $chk){
-                     DB::table('contact_address')->where('id',$chk)->delete();
-               }  
-               return redirect()->back()->with('success',"Xoá thành công");
+            if ($request->action == "delete") {
+                foreach ($data['check'] as $key => $chk) {
+                    DB::table('contact_address')->where('id', $chk)->delete();
+                }
+                return redirect()->back()->with('success', "Xoá thành công");
+            } elseif ($request->action == "active") {
+                foreach ($data['check'] as $key => $chk) {
+                    DB::table('contact_address')->where('id', $chk)->update(['status' => 1]);
+                }
+                return redirect()->back()->with('success', "Cập nhật thành công");
+            } else {
+                foreach ($data['check'] as $key => $chk) {
+                    DB::table('contact_address')->where('id', $chk)->update(['status' => 0]);
+                }
             }
-            elseif($request->action == "active"){
-               foreach($data['check'] as $key => $chk){
-                     DB::table('contact_address')->where('id',$chk)->update(['status'=>1]);
-               }  
-               return redirect()->back()->with('success',"Cập nhật thành công");
-            }else{
-                  foreach($data['check'] as $key => $chk){
-                     DB::table('contact_address')->where('id',$chk)->update(['status'=>0]);
-               } 
-               } 
-           return redirect()->back()->with('success',"Cập nhật thành công");
+            return redirect()->back()->with('success', "Cập nhật thành công");
         }
     }
 
@@ -136,11 +146,9 @@ class ContactAddressController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-       DB::table('contact_address')->where('id',$id)->delete();
+    public function destroy($id)
+    {
+        $this->contactaddressRepo->find($id)->delete();
         return redirect()->back()->with('success', 'Xóa thành công');
     }
-
-   
-
 }

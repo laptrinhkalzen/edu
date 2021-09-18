@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model {
 
-    //
+    const TYPE_OFF=1;
+    const TYPE_ON=2;
     protected $table = "course";
     protected $fillable = [
-        'title', 'alias', 'summary', 'status', 'meta_title', 'meta_keywords', 'meta_description', 'ordering', 'ordering','content', 'image', 'created_at','updated_at','price','sale_price','teacher_id','video'
+       'type', 'title', 'alias', 'summary', 'status', 'meta_title', 'meta_keywords', 'meta_description', 'ordering', 'ordering','content', 'image', 'created_at','updated_at','price','sale_price','teacher_id','video'
     ];
 
      public function validateCreate() {

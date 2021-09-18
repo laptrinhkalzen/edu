@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 <div class="content">
-    <form action="{!!route('admin.course.store')!!}" method="POST" enctype="multipart/form-data">
+    <form action="{!!route('admin.course.store', $type)!!}" method="POST" enctype="multipart/form-data">
         <div class="card">
             <div class="card-header header-elements-inline">
                 <h6 class="card-title">Tạo mới</h6>

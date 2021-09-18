@@ -2,6 +2,7 @@
 
 namespace Repositories\Support;
 
+use Faker\Provider\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Container\Container as App;
 use Validator;
@@ -33,7 +34,17 @@ abstract class AbstractRepository {
         }
         return $this->model = $model;
     }
-
+    public function uploadImage($image){
+        if($image){
+            $get_name_image = $image->getClientOriginalName();
+            $name_image = current(explode('.',$get_name_image));
+            $new_image =  $name_image.rand(0,99).'.'.$image->getClientOriginalExtension();
+            $image->move('upload/images/',$new_image);
+            $input['image'] = '/upload/images/'.$new_image;
+            return $input['image'];
+        }
+        
+    }
     /**
      * @param array $columns
      * @return mixed

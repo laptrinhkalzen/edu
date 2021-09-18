@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Route;
 /*
   |--------------------------------------------------------------------------
   | API Routes
@@ -50,5 +50,6 @@ Route::post('/delete_image', ['as' => 'api.upload', 'uses' => 'Api\FrontendContr
 Route::post('/create-question-api', ['as' => 'api.create_question', 'uses' => 'Api\QuestionController@create_question']);
 Route::post('/update-question-api', ['as' => 'api.update_question', 'uses' => 'Api\QuestionController@update_question']);
 Route::post('/update-promo', ['as' => 'api.update_promo', 'uses' => 'Api\FrontendController@update_promo']);
+Route::post('/update-teacher-status', ['as' => 'admin.update_status', 'uses' => 'Backend\UpdateStatus@updateTeacherStatus']);
 
 //Route::post('/filter-news-cat', ['as' => 'api.filter_news_cat', 'uses' => 'Api\FilterController@filter_news_cat']);

@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 /*
   |--------------------------------------------------------------------------
   | Web Routes
@@ -25,6 +25,6 @@ Route::group(['prefix' => 'api', 'middleware' => 'api'], function() {
     Route::post('/login-with-fb-sdk', ['as' => 'api.login_with_fb', 'uses' => 'Api\FrontendController@checkUser']);
 
     Route::post('/edit_template_setting', ['as' => 'api.edit_template_setting', 'uses' => 'Api\TemplateSettingController@update']);
-
+    
 });
 

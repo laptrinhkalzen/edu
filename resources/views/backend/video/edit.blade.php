@@ -53,10 +53,13 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label text-right">Link video <span class="text-danger">*</span></label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" name="video_url" value="{!!is_null(old('video_url'))?$record->video_url:old('video_url')!!}" required="">
-                                                </div>
+                                                <label class="col-md-3 col-form-label text-right">Video <span class="text-danger">*</span></label>
+                                 
+                                               <video class="col-md-9" controls>
+                                                  <source src="{{URL::asset($record->video)}}" type="video/mp4">
+                                                Video
+                                            </video>
+                              
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label text-right">Mô tả: </label>

@@ -8,7 +8,7 @@ class Video extends Model
 {
     protected $table = 'video';
     protected $fillable = [
-        'title', 'alias', 'video_url', 'description', 'content', 'meta_title', 'meta_keywords', 'meta_description', 'is_hot','is_simon', 'status', 'ordering', 'keywords', 'images', 'created_by', 'post_schedule'
+        'title', 'alias', 'video', 'description', 'content', 'meta_title', 'meta_keywords', 'meta_description', 'status', 'ordering', 'keywords', 'images', 'created_by', 'post_schedule'
     ];
     public function getPostSchedule(){
         return date('d/m/Y', strtotime($this->post_schedule));

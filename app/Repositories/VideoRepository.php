@@ -6,6 +6,7 @@ use App\Product;
 use Illuminate\Support\Facades\DB;
 use Repositories\Support\AbstractRepository;
 
+
 class VideoRepository extends AbstractRepository
 {
     public function __construct(\Illuminate\Container\Container $app) {
@@ -19,14 +20,14 @@ class VideoRepository extends AbstractRepository
         return $rules = [
             'title' => 'required|unique:video',
             'alias' => 'required',
-            'video_url' => 'required'
+            'video' => 'required|mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts|max:200000'
         ];
     }
     public function validateUpdate($id) {
         return $rules = [
             'title' => 'required|unique:video,title,'.$id.',id',
             'alias' => 'required',
-            'video_url' => 'required'
+            'video' => 'required|mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts|max:200000'
         ];
     }
 

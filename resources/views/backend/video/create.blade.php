@@ -39,7 +39,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label text-right">Url <span class="text-danger">*</span></label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="" name="alias" value="{!!old('alias')!!}" required>
+                                                    <input type="text" class="form-control"  name="alias" value="{!!old('alias')!!}" required>
                                                     {!! $errors->first('alias', '<span class="text-danger">:message</span>') !!}
                                                 </div>
                                             </div>
@@ -49,13 +49,14 @@
                                                     <select class="select-search form-control" name="category_id[]"data-placeholder="Chọn danh mục" multiple="" required>
                                                         {!!$category_html!!}
                                                     </select>
-                                                    {!! $errors->first('alias', '<span class="text-danger">:message</span>') !!}
+                                                    {!! $errors->first('category', '<span class="text-danger">:message</span>') !!}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label text-right">Link video <span class="text-danger">*</span></label>
+                                                <label class="col-md-3 col-form-label text-right">Video <span class="text-danger">*</span></label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" name="video_url" value="{!!old('video_url')!!}" required="">
+                                                    <input type="file" class="form-control" name="video" value="{!!old('video')!!}" required="">
+                                                     {!! $errors->first('video', '<span class="text-danger">:message</span>') !!}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -140,15 +141,7 @@
                                     <input type="checkbox" class="form-check-input-styled" name="is_hot" data-fouc="">
                                 </label>
                             </div>
-                        </div>
-                         <div class="form-group row">
-                            <div class="form-check col-md-5 form-check-right">
-                                <label class="form-check-label float-right">
-                                    Video simon
-                                    <input type="checkbox" class="form-check-input-styled" name="is_simon" data-fouc="">
-                                </label>
-                            </div>
-                        </div> -->
+                        </div>-->
                         <!-- <div class="form-group row">
                             <label class="form-check-label col-md-6  text-left">Hẹn ngày đăng </label>
                             <div class="input-group col-md-12" style="margin-top:20px">

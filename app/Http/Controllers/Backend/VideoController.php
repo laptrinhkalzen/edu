@@ -8,6 +8,7 @@ use Repositories\VideoRepository;
 use Repositories\CategoryRepository;
 use App\Helpers\StringHelper;
 use DB;
+use File;
 
 class VideoController extends Controller {
 
@@ -47,6 +48,8 @@ class VideoController extends Controller {
         return view('backend/video/create', compact('category_html','count_order'));
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -65,22 +68,14 @@ class VideoController extends Controller {
         } else {
             $input['status'] = 0;
         }
-        if (isset($input['is_hot'])) {
-            $input['is_hot'] = 1;
-        } else {
-            $input['is_hot'] = 0;
-        }
-        if (isset($input['is_simon'])) {
-            $input['is_simon'] = 1;
-        } else {
-            $input['is_simon'] = 0;
-        }
         $input['created_by'] = \Auth::user()->id;
-        $input['view_count'] = 0;
+
+        if($request->video){
+             $input['video'] = $this->videoRepo->uploadImage($request->video);
+        }
         if (isset($input['post_schedule'])) {
             $input['post_schedule'] = $input['post_schedule_submit'];
         }
-
         $video = $this->videoRepo->create($input);
         $video->categories()->attach($input['category_id']);
         return redirect()->route('admin.video.index')->with('success', 'Tạo mới thành công');
@@ -133,19 +128,10 @@ class VideoController extends Controller {
         } else {
             $input['status'] = 0;
         }
-        if (isset($input['is_hot'])) {
-            $input['is_hot'] = 1;
-        } else {
-            $input['is_hot'] = 0;
-        }
-        if (isset($input['is_simon'])) {
-            $input['is_simon'] = 1;
-        } else {
-            $input['is_simon'] = 0;
-        }
         $input['created_by'] = \Auth::user()->id;
-        if (isset($input['post_schedule'])) {
-            $input['post_schedule'] = $input['post_schedule_submit'];
+        if($request->video){
+            $this->videoRepo->checkExistFile($request->video);
+            $input['video'] = $this->videoRepo->uploadImage($request->video);
         }
 
         $res = $this->videoRepo->update($input, $id);

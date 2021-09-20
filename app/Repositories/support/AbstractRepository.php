@@ -6,6 +6,7 @@ use Faker\Provider\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Container\Container as App;
 use Validator;
+use File;
 
 abstract class AbstractRepository {
 
@@ -44,6 +45,12 @@ abstract class AbstractRepository {
             return $input['image'];
         }
         
+    }
+
+    public function checkExistFile($file){
+        if (File::exists(public_path('upload/images/'.$file))) {
+             File::delete(public_path('upload/images/'.$file));
+         }
     }
     /**
      * @param array $columns
